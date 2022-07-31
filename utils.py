@@ -1,11 +1,12 @@
 from typing import List, Dict, Any, Tuple, Optional
 from time import sleep
-
+import os
 import requests
 import streamlit as st
 
 
-API_ENDPOINT = "https://d432-34-87-63-89.ngrok.io"
+API_ENDPOINT = os.getenv("API_ENDPOINT", "https://d432-34-87-63-89.ngrok.io")
+print("-----> API_ENDPOINT:", API_ENDPOINT)
 STATUS = "initialized"
 HS_VERSION = "hs_version"
 DOC_REQUEST = "query"

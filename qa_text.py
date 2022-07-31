@@ -62,7 +62,6 @@ def ask_question(pipe, question):
     )
     print(f"---> Question: {question}")
     print(f"---> Answers: ")
-    print_answers(prediction, details="minimum")
     return prediction
 
 

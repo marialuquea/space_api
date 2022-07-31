@@ -16,10 +16,9 @@ DOC_UPLOAD = "file-upload"
 
 def haystack_is_ready():
     url = f"{API_ENDPOINT}/{STATUS}"
-    print("Haystack is ready STARTING")
-    print(url)
-    print(requests.get(url).status_code)
-    print("-"*20)
+    print("Haystack is ready STARTING at:")
+    print("-> url:",url)
+    print("-> Status code:",requests.get(url).status_code)
     try:
         if requests.get(url).status_code < 400:
             print("---> READY!!!!")
@@ -33,8 +32,6 @@ def haystack_is_ready():
 @st.cache
 def haystack_version():
     url = f"{API_ENDPOINT}/{HS_VERSION}"
-    print(requests.get(url, timeout=0.1).json()["hs_version"])
-    print("^^ haystack_version()")
     return requests.get(url, timeout=0.1).json()["hs_version"]
 
 
@@ -48,18 +45,49 @@ def query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[List[Di
     params = {"filters": filters, "Retriever": {"top_k": top_k_retriever}, "Reader": {"top_k": top_k_reader}}
     req = {"query": query, "params": params}
     print("SENDING A QUERY TO THE API")
-    print("url:",url)
-    print("params:",params)
-    print("req:",req)
+    # url: https://203d-34-73-20-231.ngrok.io/query
+    # params: {'filters': {}, 'Retriever': {'top_k': 3}, 'Reader': {'top_k': 3}}
+    # req: {'query': "What is space debris?", 
+    # 'params': {'filters': {}, 'Retriever': {'top_k': 3}, 'Reader': {'top_k': 3}}}
     response_raw = requests.post(url, json=req)
-    print('-> RESPONSE RAW', response_raw)
+    # response_raw: <Response [200]>
 
     if response_raw.status_code >= 400 and response_raw.status_code != 503:
+        print("-> Exception in response_raw.statuc_code", vars(response_raw))
         raise Exception(f"{vars(response_raw)}")
 
     response = response_raw.json()
     if "errors" in response:
+        print("-> Errors in response:", ", ".join(response["errors"]))
         raise Exception(", ".join(response["errors"]))
+    print("-> GOOD Response:", response)
+    # 200 
+    # { 'query': 'what is space debris?', 
+    #   'answers': [
+    #       {'answer': 'a problem', 'type': 'extractive', 'score': 0.3546408787369728, 'context': 'This article considers why space debris is a problem, how space  debris is distributed, what risks space debris poses to satellites, what  internation', 'offsets_in_document': [{'start': 43, 'end': 52}], 'offsets_in_context': [{'start': 43, 'end': 52}], 'document_id': 'af74b43e88ba15d077e3a03249fedf94', 'meta': {'article_title': 'sd_paper_59_m.txt'}}, 
+    #       {'answer': 'Space Traffic Management', 'type': 'extractive', 'score': 0.009678191505372524, 'context': 'What is Space Traffic Management ', 'offsets_in_document': [{'start': 8, 'end': 32}], 'offsets_in_context': [{'start': 8, 'end': 32}], 'document_id': 'a2249fb45863b927bb51bc7185aae83c', 'meta': {'article_title': 'IAASS_paper_135_m.txt'}}, 
+    #       {'answer': 'SPACE OBJECT', 'type': 'extractive', 'score': 0.006475328002125025, 'context': 'B. WHAT IS A SPACE OBJECT   ', 'offsets_in_document': [{'start': 13, 'end': 25}], 'offsets_in_context': [{'start': 13, 'end': 25}], 'document_id': 'c483a71487227da30562ff88bf0dbda3', 'meta': {'article_title': 'IAASS_paper_141_m.txt'}}, 
+    #       {'answer': 'System Safety', 'type': 'extractive', 'score': 0.003304556477814913, 'context': '1.1  What is System Safety ', 'offsets_in_document': [{'start': 13, 'end': 26}], 'offsets_in_context': [{'start': 13, 'end': 26}], 'document_id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}, 
+    #       {'answer': 'System Safety', 'type': 'extractive', 'score': 0.002059442806057632, 'context': '1.1   What Is System Safety . 6', 'offsets_in_document': [{'start': 14, 'end': 27}], 'offsets_in_context': [{'start': 14, 'end': 27}], 'document_id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}, 
+    #       {'answer': 'SPACE OBJECT', 'type': 'extractive', 'score': 0.0012499610311351717, 'context': 'APPLIES  A. WHAT IS AN AIRCRAFT  B. WHAT IS A SPACE OBJECT  C. WHAT IS AN AEROSPACE VEHICLE  D. PROBLEMS WITH THE FUNCTIONALIST APPROACH ', 'offsets_in_document': [{'start': 46, 'end': 58}], 'offsets_in_context': [{'start': 46, 'end': 58}], 'document_id': 'c483a71487227da30562ff88bf0dbda3', 'meta': {'article_title': 'IAASS_paper_141_m.txt'}}, 
+    #       {'answer': 'SYSTEM SAFETY', 'type': 'extractive', 'score': 0.0011647613137029111, 'context': 'WHAT IS   SYSTEM SAFETY', 'offsets_in_document': [{'start': 10, 'end': 23}], 'offsets_in_context': [{'start': 10, 'end': 23}], 'document_id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}, 
+    #       {'answer': 'Risk', 'type': 'extractive', 'score': 0.00041400118061574176, 'context': 'What is the Risk ', 'offsets_in_document': [{'start': 12, 'end': 16}], 'offsets_in_context': [{'start': 12, 'end': 16}], 'document_id': 'd8bf7d33de8c65d6cbabb0237560d7b', 'meta': {'article_title': 'stm_paper_88_m.txt'}}, 
+    #       {'answer': 'satellite', 'type': 'extractive', 'score': 0.00041361330659128726, 'context': 'space.  We must know what the satellite is capable of doing, what it is being used for and what it ', 'offsets_in_document': [{'start': 30, 'end': 39}], 'offsets_in_context': [{'start': 30, 'end': 39}], 'document_id': '1f4e7882d3a6df62696d57bf66c6c8ca', 'meta': {'article_title': 'SSA_papers_paper_222_m.txt'}}, 
+    #       {'answer': 'Risk', 'type': 'extractive', 'score': 0.00029716818971792236, 'context': 'What is the Risk', 'offsets_in_document': [{'start': 12, 'end': 16}], 'offsets_in_context': [{'start': 12, 'end': 16}], 'document_id': 'd8bf7d33de8c65d6cbabb0237560d7b', 'meta': {'article_title': 'stm_paper_88_m.txt'}}], 
+    #   'documents': [
+    #       {'content': 'B. WHAT IS A SPACE OBJECT   ', 'content_type': 'text', 'id': 'c483a71487227da30562ff88bf0dbda3', 'meta': {'article_title': 'IAASS_paper_141_m.txt'}}, 
+    #       {'content': 'What is Space Traffic Management ', 'content_type': 'text', 'id': 'a2249fb45863b927bb51bc7185aae83c', 'meta': {'article_title': 'IAASS_paper_135_m.txt'}}, 
+    #       {'content': 'What is the Risk', 'content_type': 'text', 'id': 'd8bf7d33de8c65d6cbabb0237560d7b', 'meta': {'article_title': 'stm_paper_88_m.txt'}}, 
+    #       {'content': 'What is the Risk ', 'content_type': 'text', 'id': 'd8bf7d33de8c65d6cbabb0237560d7b', 'meta': {'article_title': 'stm_paper_88_m.txt'}}, 
+    #       {'content': 'This article considers why space debris is a problem, how space  debris is distributed, what risks space debris poses to satellites, what  international communities have done to ameliorate the problem, and  what we should do in the future.', 'content_type': 'text', 'id': 'af74b43e88ba15d077e3a03249fedf94', 'meta': {'article_title': 'sd_paper_59_m.txt'}}, 
+    #       {'content': 'space.  We must know what the satellite is capable of doing, what it is being used for and what it ', 'content_type': 'text', 'id': '1f4e7882d3a6df62696d57bf66c6c8ca', 'meta': {'article_title': 'SSA_papers_paper_222_m.txt'}}, 
+    #       {'content': 'APPLIES  A. WHAT IS AN AIRCRAFT  B. WHAT IS A SPACE OBJECT  C. WHAT IS AN AEROSPACE VEHICLE  D. PROBLEMS WITH THE FUNCTIONALIST APPROACH ', 'content_type': 'text', 'id': 'c483a71487227da30562ff88bf0dbda3', 'meta': {'article_title': 'IAASS_paper_141_m.txt'}}, 
+    #       {'content': '1.1   What Is System Safety . 6', 'content_type': 'text', 'id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}, 
+    #       {'content': 'WHAT IS   SYSTEM SAFETY', 'content_type': 'text', 'id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}, 
+    #       {'content': '1.1  What is System Safety ', 'content_type': 'text', 'id': 'ffc20f651fc394543936ab6f2ca4f1b', 'meta': {'article_title': 'IAASS_paper_146_m.txt'}}
+    #   ]
+    # }
+    # [69] 0s
 
     # Format response
     results = []
@@ -70,7 +98,6 @@ def query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[List[Di
                 {
                     "context": "..." + answer["context"] + "...",
                     "answer": answer.get("answer", None),
-                    "source": answer["meta"]["name"],
                     "relevance": round(answer["score"] * 100, 2),
                     "document": [doc for doc in response["documents"] if doc["id"] == answer["document_id"]][0],
                     "offset_start_in_doc": answer["offsets_in_document"][0]["start"],

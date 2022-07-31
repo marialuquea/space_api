@@ -1,7 +1,4 @@
 from typing import List, Dict, Any, Tuple, Optional
-
-import os
-import logging
 from time import sleep
 
 import requests
@@ -27,7 +24,7 @@ def haystack_is_ready():
             print("---> READY!!!!")
             return True
     except Exception as e:
-        logging.exception(e)
+        print(e)
         sleep(1)  # To avoid spamming a non-existing endpoint at startup
     return False
 

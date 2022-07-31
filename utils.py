@@ -5,7 +5,7 @@ import requests
 import streamlit as st
 
 
-API_ENDPOINT = "https://71eb-35-243-158-74.ngrok.io"
+API_ENDPOINT = "https://d432-34-87-63-89.ngrok.io"
 STATUS = "initialized"
 HS_VERSION = "hs_version"
 DOC_REQUEST = "query"

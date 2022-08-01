@@ -52,7 +52,7 @@ def send_query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[Li
     # req: {'query': "What is space debris?", 
     # 'params': {'filters': {}, 'Retriever': {'top_k': 3}, 'Reader': {'top_k': 3}}}
     response_raw = requests.post(url, json=req)
-    print("RESPONSE RAW:")
+    print(f"RESPONSE RAW: {response_raw.json()}")
     print(response_raw.status_code)
     print(response_raw.json())
     # response_raw: <Response [200]>

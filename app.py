@@ -173,14 +173,12 @@ Ask questions about space debris, management and safety :)
                     top_k_reader    = top_k_reader, 
                     top_k_retriever = top_k_retriever
                 )
-                print("-> result",result)
                 st.info(result)
-                st.session_state.results = send_query(
+                st.session_state.results, st.session_state.raw_json = send_query(
                     question, 
                     top_k_reader    = top_k_reader, 
                     top_k_retriever = top_k_retriever
                 )
-                st.session_state.raw_json = st.session_state.results
             except JSONDecodeError as je:
                 st.error("👓 &nbsp;&nbsp; An error occurred reading the results. Check document store connection.")
                 return

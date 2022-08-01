@@ -1,14 +1,22 @@
-"Question Text";"Answer"
-"What is the capital of France?";"Paris"
-"What's the tallest mountain in Africa?";"Mount Kilimanjaro"
-"What's the climate of Beijing?";"monsoon-influenced humid continental"
-"What's the longest river of Europe?";"The Volga"
-"What's the deepest lake in the world?";"Lake Bajkal"
-"How many people live in the capital of the US?";"689,545"
-"Which Chinese city is the largest?";"Shanghai"
-"What's the type of government of the UK?";"unitary parliamentary democracy and constitutional monarchy"
-"What currency is used in Hungary?";"Hungarian forint"
-"In which city is the Louvre?";"Paris"
-"Who is the current king of Spain?";"Felipe VI"
-"Which countries border with Mongolia?";"Russia and China"
-"What's the current name of Swaziland?";"Eswatini"
+'Question Text';'Answer'
+'What is a justification for interstellar travel?';'one of most commonly proffered justifications for interstellar travel is that through exploring other solar systems humanity will find second home colonization of which will help to ensure long term survival of our species'
+'How would the effects of the sample on terrestrial life forms be complicated by microgravity?';'on physiology of living species'
+'What process can obtain a complete picture of subcellular structures?';'use of 3d localization in single molecule super resolution microscopy'
+'How many objects are currently in orbit around earth?';'more than 20000 objects in orbit around earth'
+'What are examples of objects in orbit around the Earth?';'operational satellites dead ones and other human made debris'
+'What would be a good detector for monitoring, and discovery of space debris?';'all sky coverage and optimization toward high angular rate of motion'
+'The extremely low focal ratio and large light gain of the aperture would help discovery of what?';'active asteroids jewitt 2012 especially at low solar elongations'
+'What is a requirement for an SSA system?';'worldwide sensor network'
+'What will the new Ground control role consist of?';'higher level possibly automated supervisory function as opposed to lower level human based control'
+'What is the main issue with worldwide sensor networks currently?';'that they have been developed in cold war for military purposes and they are still used for this'
+'What is the most essential information for a reliable collision prediction?';'standard deviation or measurement'
+'What is the main issue Europe faced when starting to work on their own SSA system?';'issue is that europe has number of telescopes and some radar but none of these has been build for ssa purposes'
+'When will the Fourth European Conference on Space Debris be held?';'20 april 2005'
+'Where was the Fourth European Conference on Space Debris held?';'darmstadt germany'
+'How many sessions were planned at the Fourth European Conference on Space Debris?';'six sessions'
+'What does the fragmentation of shell like objects, like fuel containers or rocket bodies relevant for space debris form?';'independent universality class'
+'When do EDT systems bring advantages to space systems?';'edt systems bring clear advantages to system mass when used as main method of propulsion'
+'Why could someone think that interstellar planetary protection is of no concern?';'one might think at first blush that interstellar planetary protection is of little to no concern ethically speaking because protection would interfere with extant overriding ethical justifications for interstellar travel'
+'What must a sample be sent to when it is returned from Mars?';'to earth based specialized containment facility where it can be properly contained and subjected to rigorous quarantine test program'
+'What happens to a sample when it comes back from Mars?';'it must be returned to earth based specialized containment facility where it can be properly contained and subjected to rigorous quarantine test program'
+'What is ill advised when a Mars sample is sent to an orbiting laboratory?';'return of sample to orbiting laboratory'

@@ -1,7 +1,6 @@
 from typing import List, Dict, Any, Tuple, Optional
 from time import sleep
 import os
-import json
 import logging
 import requests
 import streamlit as st
@@ -133,9 +132,12 @@ def send_feedback(query, answer_obj, is_correct_answer, is_correct_document, doc
         "origin": "user-feedback",
         "answer": answer_obj,
     }
+    print("-> Sending feedback request:")
+    print("->",req)
     response_raw = requests.post(url, json=req)
     if response_raw.status_code >= 400:
         raise ValueError(f"An error was returned [code {response_raw.status_code}]: {response_raw.json()}")
+    print("-> Feedback correctly sent to API :)")
 
 
 def get_backlink(result) -> Tuple[Optional[str], Optional[str]]:

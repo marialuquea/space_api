@@ -17,9 +17,7 @@ DOC_UPLOAD = "file-upload"
 
 def haystack_is_ready():
     url = f"{API_ENDPOINT}/{STATUS}"
-    print("Haystack is ready STARTING at:")
-    print("-> url:",url)
-    print("-> Status code:",requests.get(url).status_code)
+    print(f"Haystack is ready STARTING at: {url}")
     try:
         if requests.get(url).status_code < 400:
             print("---> READY!!!!")
@@ -52,9 +50,7 @@ def send_query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[Li
     # req: {'query': "What is space debris?", 
     # 'params': {'filters': {}, 'Retriever': {'top_k': 3}, 'Reader': {'top_k': 3}}}
     response_raw = requests.post(url, json=req)
-    print(f"RESPONSE RAW: {response_raw.json()}")
-    print(response_raw.status_code)
-    print(response_raw.json())
+    print(f"RESPONSE RAW: {response_raw.status_code}")
     # response_raw: <Response [200]>
 
     if response_raw.status_code >= 400 and response_raw.status_code != 503:
@@ -65,7 +61,6 @@ def send_query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[Li
     if "errors" in response:
         print("-> Errors in response:", ", ".join(response["errors"]))
         raise Exception(", ".join(response["errors"]))
-    print("-> GOOD Response:", response)
     """
     200 
     { 'query': 'what is space debris?', 

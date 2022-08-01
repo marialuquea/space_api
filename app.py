@@ -166,14 +166,6 @@ Ask questions about space debris, management and safety :)
         print("-> top k retriever:", top_k_retriever)
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents... \n "):
             try: 
-                print("-> Testing sending query:")
-                st.info("-> Testing sending query:")
-                result = send_query(
-                    question, 
-                    top_k_reader    = top_k_reader, 
-                    top_k_retriever = top_k_retriever
-                )
-                st.info(result)
                 st.session_state.results, st.session_state.raw_json = send_query(
                     question, 
                     top_k_reader    = top_k_reader, 
@@ -213,13 +205,15 @@ Ask questions about space debris, management and safety :)
                 url, title = get_backlink(result)
                 if url and title:
                     source = f"[{result['document']['meta']['title']}]({result['document']['meta']['url']})"
-                else:
+                elif result['source']:
                     source = f"{result['source']}"
+                else: 
+                    source = "Source not found."
                 st.markdown(f"**Relevance:** {result['relevance']} -  **Source:** {source}")
 
             else:
                 st.info(
-                    "🤔 &nbsp;&nbsp; Haystack is unsure whether any of the documents contain an answer to your question. Try to reformulate it!"
+                    "🤔 &nbsp;&nbsp; Maria's QA is unsure whether any of the documents contain an answer to your question. Try to reformulate it!"
                 )
                 st.write("**Relevance:** ", result["relevance"])
 

@@ -161,9 +161,7 @@ Ask questions about space debris, management and safety :)
     if run_query and question:
         reset_results()
         st.session_state.question = question
-        print("-> Get results for query:", st.session_state.question)
-        print("-> top k reader:", top_k_reader)
-        print("-> top k retriever:", top_k_retriever)
+        logging.info(f"Getting results for query: {st.session_state.question}")
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents... \n "):
             try: 
                 st.session_state.results, st.session_state.raw_json = send_query(
@@ -204,11 +202,12 @@ Ask questions about space debris, management and safety :)
                 source = ""
                 url, title = get_backlink(result)
                 if url and title:
-                    source = f"[{result['document']['meta']['title']}]({result['document']['meta']['url']})"
-                elif result['source']:
-                    source = f"{result['source']}"
+                    source = f"[{result['document']['meta']['title']}]({result['document']['meta']['url']})"   
                 else: 
-                    source = "Source not found."
+                    try:
+                        source = f"{result['source']}"
+                    except:
+                        source = "Source not found."
                 st.markdown(f"**Relevance:** {result['relevance']} -  **Source:** {source}")
 
             else:

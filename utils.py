@@ -2,6 +2,7 @@ from typing import List, Dict, Any, Tuple, Optional
 from time import sleep
 import os
 import json
+import logging
 import requests
 import streamlit as st
 
@@ -18,6 +19,7 @@ DOC_UPLOAD = "file-upload"
 def haystack_is_ready():
     url = f"{API_ENDPOINT}/{STATUS}"
     print(f"Haystack is ready STARTING at: {url}")
+    logging.info(f"Haystack is ready STARTING at: {url}")
     try:
         if requests.get(url).status_code < 400:
             print("---> READY!!!!")

@@ -17,8 +17,8 @@ DEFAULT_QUESTION_AT_STARTUP = os.getenv("DEFAULT_QUESTION_AT_STARTUP", "How many
 DEFAULT_ANSWER_AT_STARTUP = os.getenv("DEFAULT_ANSWER_AT_STARTUP", "six sessions")
 
 # Sliders
-DEFAULT_DOCS_FROM_RETRIEVER = int(os.getenv("DEFAULT_DOCS_FROM_RETRIEVER", "3"))
-DEFAULT_NUMBER_OF_ANSWERS = int(os.getenv("DEFAULT_NUMBER_OF_ANSWERS", "3"))
+DEFAULT_DOCS_FROM_RETRIEVER = int(os.getenv("DEFAULT_DOCS_FROM_RETRIEVER", "10"))
+DEFAULT_NUMBER_OF_ANSWERS = int(os.getenv("DEFAULT_NUMBER_OF_ANSWERS", "10"))
 
 # Labels for the evaluation
 EVAL_LABELS = os.getenv("EVAL_FILE", str(Path(__file__).parent / "eval_labels_example.csv"))
@@ -74,7 +74,7 @@ Ask questions about space debris, management and safety :)
         step=1,
         on_change=reset_results,
     )
-    eval_mode = st.sidebar.checkbox("Evaluation mode")
+    eval_mode = st.sidebar.checkbox("Evaluation mode", value=True)
     debug = st.sidebar.checkbox("Show debug info")
 
     st.sidebar.markdown(

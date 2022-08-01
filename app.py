@@ -9,7 +9,7 @@ import streamlit as st
 from annotated_text import annotation
 from markdown import markdown
 
-from utils import haystack_is_ready, send_query, send_feedback, haystack_version, get_backlink
+from utils import haystack_is_ready, send_query, send_feedback, get_backlink
 
 
 # Adjust to a question that you would like users to see in the search bar when they load the UI:
@@ -23,7 +23,6 @@ DEFAULT_NUMBER_OF_ANSWERS = int(os.getenv("DEFAULT_NUMBER_OF_ANSWERS", "3"))
 # Labels for the evaluation
 EVAL_LABELS = os.getenv("EVAL_FILE", str(Path(__file__).parent / "eval_labels_example.csv"))
 
-
 def set_state_if_absent(key, value):
     if key not in st.session_state:
         st.session_state[key] = value
@@ -31,7 +30,7 @@ def set_state_if_absent(key, value):
 
 def main():
 
-    st.set_page_config(page_title="Space QA", page_icon="https://raw.githubusercontent.com/marialuquea/mariasounds/master/images/favicon.ico")
+    st.set_page_config(page_title="Maria's Space QA", page_icon="https://raw.githubusercontent.com/marialuquea/mariasounds/master/images/favicon.ico")
 
     # Persistent state
     set_state_if_absent("question", DEFAULT_QUESTION_AT_STARTUP)
@@ -47,7 +46,7 @@ def main():
         st.session_state.raw_json = None
 
     # Title and introduction
-    st.write("# Space Q&A")
+    st.write("# Maria's Space Q&A")
     st.markdown(
         """
 Ask questions about space debris, management and safety :)
@@ -206,6 +205,10 @@ Ask questions about space debris, management and safety :)
                 else: 
                     try:
                         source = f"{result['source']}"
+                    except:
+                        source = "Source not found."
+                    try:
+                        source = f"{result['document']['meta']['article_title']}"
                     except:
                         source = "Source not found."
                 st.markdown(f"**Relevance:** {result['relevance']} -  **Source:** {source}")

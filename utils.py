@@ -17,8 +17,6 @@ DOC_UPLOAD = "file-upload"
 
 def haystack_is_ready():
     url = f"{API_ENDPOINT}/{STATUS}"
-    print(f"Haystack is ready STARTING at: {url}")
-    logging.info(f"Haystack is ready STARTING at: {url}")
     try:
         if requests.get(url).status_code < 400:
             print("---> READY!!!!")
@@ -27,12 +25,6 @@ def haystack_is_ready():
         print(e)
         sleep(1)  # To avoid spamming a non-existing endpoint at startup
     return False
-
-
-@st.cache
-def haystack_version():
-    url = f"{API_ENDPOINT}/{HS_VERSION}"
-    return requests.get(url, timeout=0.1).json()["hs_version"]
 
 
 def send_query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[List[Dict[str, Any]], Dict[str, str]]:
@@ -133,7 +125,6 @@ def send_feedback(query, answer_obj, is_correct_answer, is_correct_document, doc
         "answer": answer_obj,
     }
     print("-> Sending feedback request:")
-    print("->",req)
     response_raw = requests.post(url, json=req)
     if response_raw.status_code >= 400:
         raise ValueError(f"An error was returned [code {response_raw.status_code}]: {response_raw.json()}")

@@ -9,7 +9,7 @@ import streamlit as st
 from annotated_text import annotation
 from markdown import markdown
 
-from utils import haystack_is_ready, query, send_feedback, haystack_version, get_backlink
+from utils import haystack_is_ready, send_query, send_feedback, haystack_version, get_backlink
 
 
 # Adjust to a question that you would like users to see in the search bar when they load the UI:
@@ -77,12 +77,6 @@ Ask questions about space debris, management and safety :)
     )
     eval_mode = st.sidebar.checkbox("Evaluation mode")
     debug = st.sidebar.checkbox("Show debug info")
-
-    hs_version = ""
-    try:
-        hs_version = f" <small>(v{haystack_version()})</small>"
-    except Exception:
-        pass
 
     st.sidebar.markdown(
         f"""
@@ -167,14 +161,26 @@ Ask questions about space debris, management and safety :)
     if run_query and question:
         reset_results()
         st.session_state.question = question
-
+        print("-> Get results for query:", st.session_state.question)
+        print("-> top k reader:", top_k_reader)
+        print("-> top k retriever:", top_k_retriever)
         with st.spinner("🧠 &nbsp;&nbsp; Performing neural search on documents... \n "):
-            try:
-                st.session_state.results, st.session_state.raw_json = query(
+            try: 
+                print("-> Testing sending query:")
+                st.info("-> Testing sending query:")
+                result = send_query(
                     question, 
                     top_k_reader    = top_k_reader, 
                     top_k_retriever = top_k_retriever
                 )
+                print("-> result",result)
+                st.info(result)
+                st.session_state.results = send_query(
+                    question, 
+                    top_k_reader    = top_k_reader, 
+                    top_k_retriever = top_k_retriever
+                )
+                st.session_state.raw_json = st.session_state.results
             except JSONDecodeError as je:
                 st.error("👓 &nbsp;&nbsp; An error occurred reading the results. Check document store connection.")
                 return

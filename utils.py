@@ -90,22 +90,22 @@ def send_query(query, filters={}, top_k_reader=5, top_k_retriever=5) -> Tuple[Li
         if answer.get("answer", None):
             results.append(
                 {
-                    "context": "..." + answer["context"] + "...",
+                    # "context": "..." + answer["context"] + "...",
                     "answer": answer.get("answer", None),
-                    "relevance": round(answer["score"] * 100, 2),
-                    "document": [doc for doc in response["documents"] if doc["id"] == answer["document_id"]][0],
-                    "offset_start_in_doc": answer["offsets_in_document"][0]["start"],
-                    "_raw": answer,
+                    # "relevance": round(answer["score"] * 100, 2),
+                    # "document": [doc for doc in response["documents"] if doc["id"] == answer["document_id"]][0],
+                    # "offset_start_in_doc": answer["offsets_in_document"][0]["start"],
+                    # "_raw": answer,
                 }
             )
         else:
             results.append(
                 {
-                    "context": None,
+                    # "context": None,
                     "answer": None,
-                    "document": None,
-                    "relevance": round(answer["score"] * 100, 2),
-                    "_raw": answer,
+                    # "document": None,
+                    # "relevance": round(answer["score"] * 100, 2),
+                    # "_raw": answer,
                 }
             )
     return results, response

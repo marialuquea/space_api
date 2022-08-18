@@ -58,14 +58,15 @@ Ask questions about space debris, management and safety :)
 
     # Sidebar
     st.sidebar.header("Options")
-    top_k_reader = st.sidebar.slider(
-        "Max. number of answers",
-        min_value=1,
-        max_value=10,
-        value=DEFAULT_NUMBER_OF_ANSWERS,
-        step=1,
-        on_change=reset_results,
-    )
+    # top_k_reader = st.sidebar.slider(
+    #     "Max. number of answers",
+    #     min_value=1,
+    #     max_value=10,
+    #     value=DEFAULT_NUMBER_OF_ANSWERS,
+    #     step=1,
+    #     on_change=reset_results,
+    # )
+    top_k_reader = 1
     top_k_retriever = st.sidebar.slider(
         "Max. number of documents from retriever",
         min_value=1,
@@ -196,7 +197,7 @@ Ask questions about space debris, management and safety :)
                 # end_idx = start_idx + len(answer)
                 # Hack due to this bug: https://github.com/streamlit/streamlit/issues/3190
                 st.write(
-                    markdown(str(annotation(answer, "ANSWER", "#8ef"))),
+                    markdown(str(answer)),
                     unsafe_allow_html=True,
                 )
                 source = ""
